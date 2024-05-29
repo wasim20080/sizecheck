@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Tyre Size Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,6 +15,7 @@
             background-color: orangered;
             color: white;
             margin-bottom: 20px;
+            padding: 10px 0;
         }
 
         .selection-container {
@@ -32,7 +34,8 @@
             font-size: 16px;
             border: 2px solid orangered;
             border-radius: 5px;
-            width: 220px;
+            width: 100%;
+            max-width: 220px;
         }
 
         button {
@@ -51,7 +54,6 @@
 
         p {
             font-size: 18px;
-            color: #792929;
             text-align: center;
             margin-top: 20px;
             background-color: orange;
@@ -60,10 +62,21 @@
             border-radius: 5px;
             color: rgb(250, 250, 250);
         }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        footer span {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <header><h1>CHECK YOUR TYRE SIZE</h1></header>
+    <header><h1>Tire Size Checker</h1></header>
     <div class="selection-container">
         <label for="vehicleType">Select Vehicle Type:</label>
         <select id="vehicleType" onchange="updateCompanyOptions()">
@@ -91,47 +104,46 @@
     <div>
         <p id="tireSizeDisplay"></p>
     </div>
-
     <script>
         const tireData = {
             car: {
                 companies: {
                     mahindra: ['Alturas G4', 'Armada', 'BOLERO PIK UP Extra Strong', 'Bolero', 'Bolero 2001-2010','Bolero 2011-2019', 'Bolero Maxi Truck Plus', 'Bolero Neo', 'Bolero Neo Plus', 'Bolero Pik Up Extra Long', 'Bolero Power Plus', 'E Verito', 'Ingenio', 'Jeep', 'KUV 100', 'KUV 100 2015-2017', 'KUV 100 NXT', 'Marazzo', 'NuvoSport', 'Quanto', 'Scorpio', 'Scorpio 2002-2013','Scorpio 2014-2022', 'Scorpio N', 'Supro', 'TUV 300', 'TUV 300 2015-2019', 'TUV 300 plus', 'Thar', 'Thar 2010-2015', 'Thar  2015-20019', 'Verito', 'Verito 2010-2012', 'Verito Vibe', 'XUV 3XO', 'XUV 300', 'XUV 400EV', 'XUV 500', 'XUV 500 2011-2015', 'XUV 700', 'XUV 700 2018', 'Xylo', 'Xylo 2008-2011', 'e20', 'e20 Plus', 'eKUV100'],
-
+    
                     
                     maruti: ['800', 'A-Star', 'Alto', 'Alto 2000-2005', 'Alto 2005-2012', 'Alto 2005-2010', 'Alto 800', 'Alto 800 2012-20216', 'Alto 800 2016-2019', 'Alto 800 tour', 'Alto K10', 'Alto K10 2010-2014', 'Alto K10 2014-2020', 'Baleno', 'Baleno 2015-2022', 'Baleno 2022', 'Baleno RS', 'Brezza', 'Celerio', 'Celerio 20014-2017', 'Celerio 2017-2021', 'Celerio 2021', 'Celerio Tour 2018-2021', 'Celerio X', 'Ciaz', 'Ciaz 2014-2017', 'Ciaz 2020', 'Ciaz S 2017-2018', 'Dzire 2017-2020', 'Eeco', 'Eeco Cargo', 'Ertiga', 'Ertiga 2015-2022', 'Ertiga 2022', 'Ertiga Tour', 'Esteem', 'Estilo', 'FRONX', 'Grand Vitara', 'Ignis 2020', 'Invicto', 'Jimny', 'Kizashi', 'Omni', 'Ritz', 'S Cross', 'S Cross 2015-2017',,  'S CrossS Cross 2017-2020', 'S-Presso', 'SX4', 'SX4 2007-2012', 'Super Carry', 'Swift', 'Swift 2004-2010','Swift 2010-2014', 'Swift 2014-2021', 'Swift 2018', 'Swift 2021-2024', 'Swift Dzire', 'Swift Dzire 2008-2012', 'Swift Dzire 2011-2014', 'Swift Dzire 2015-2017', 'Swift Dzire Tour', 'Swift Dzire Tour 2012-2018', 'Swift Dzire Tour 2018-2021', 'Versa', 'Vitara Brezza', 'Vitara Brezza 2016-2020', 'Wagon R', 'Wagon R 2006-2010', 'Wagon R 2010-2013', 'Wagon R 2013-2022', 'Wagon R Stingray', 'Wagon R Tour', 'Xl6', 'Xl6 2019-2022', 'Xl6 2022', 'Zen Estilo',],
                     
                     
                     Honda: ['Accord 2000-2003', 'Accord 2003-2007', 'Accord 2007-2008', 'Amaze','Amaze 2016-2021', 'Amaze 2021', 'BR-v', 'Brio', 'CR-v', 'CR-v 2007-2012', 'City', 'City 1997-2006', 'City 2011-2013', 'City 2020-2023', 'City 4th Generation', 'City Hybrid', 'City Hybrid 2022-2023', 'City ZX 2005-2008', 'Civic', 'Elevate', 'HR-V', 'Jazz', 'Jazz 2009-2011', 'Jazz 2011-2013', 'Jazz 2014-2020', 'Mobilio', 'New Accord', 'New Accord 2008-2011', 'New Accord 2011-2014', 'WR-v 2020-2023', 'WRV 2017-2020',],
                     
-
+    
                     TATA: ['Altroz', 'Altroz 2020-2023', 'Aria', 'Bolt', 'H2X', 'Harrier', 'Harrier 2019-2023', 'Hexa', 'Hexa 2016-2020', 'Indica v2', 'Indica v2 2001-2011', 'Indica v2 Turbo', 'Indica v2 Xeta', 'Indica Vista', 'Indica Vista 2008-2013', 'Indica Xeta 2006-2011', 'Indigo', 'Indigo cs', 'Indigo cs 2008-2012', 'Indigo eCS 2010-2017', 'Manza', 'Movus', 'Nano', 'Nano 2012-2017', 'Nexon', 'Nexon 2017-2020', 'Nexon 2020-2023', 'Nexon 2023-2023', 'Nexon EV', 'Nexon EV Max 2022-2023', 'Nexon EV Prime', 'Nexon EV Prime 2020-2023', 'Punch', 'Punch Ev', 'Safari', 'Safari 2005-2017', 'Safari 2021-2023', 'Safari Strome', 'Sierra', 'Sierra 1995-2005', 'Spacio', 'Sumo', 'Sumo Grande', 'Tiago', 'Tiago 2015-2019', 'Tiago 2019-2020', 'Tiago EV', 'Tiago JTP', 'Tiago NRG', 'Tiago NRG 2018-2020', 'Tigor', 'Tigor 2017-2020', 'Tigor EV', 'Tigor EV 2019-2021', 'Tigor EV 2021', 'Tigor EV 2021-2022', 'Tigor JTP', 'Venture', 'Winger', 'Winger Platinum', 'Xenon XT', 'Yodha Pickup', 'Zest'],
                     
                     
                     Hundai:['4S Fluidic Verna', 'Accent', 'Alcazar', 'Aura', 'Aura 2020-2023', 'Creta', 'Creta 2015-2020', 'Creta 2020-2024', 'Creta N Line', 'EON', 'Elantra', 'Elantra 2015-2019', 'Elite i20 2014-2017', 'Elite i20 2017-2020', 'Elite i20 2018', 'Exter', 'Getz', 'Getz Prime', 'Grand i10', 'Grand i10 2013-2016', 'Grand i10 2016-2017', 'Grand i10nios', 'Grand i10 Nios 2019-2023', 'Hyundai Casper', 'IONIQ 5', 'Kona', 'Santa Fe', 'Santro', 'Santro 2000 2007', 'Santro Xing', 'Sonata', 'Sonata Embera', 'Sonata Transform', 'Tucson', 'Tucson 2016-2020', 'Tucson 2020-2022', 'Venue', 'Venue 2019-2022', 'Venue 2022', 'Venue N Line', 'Verna', 'Verna 2006-2010', 'Verna 2011-2015', 'Verna 2015-2016', 'Verna 2016-2017', 'Verna 2017-2020', 'Verna 2020-2023', 'Xcent', 'Xcent 2020', 'Xcent prime', 'i10', 'i20', 'i20 2009-2011', 'i20 2010-2012', 'i20 2020-2023', 'i20 Active', 'i20 N Line 2021-2023', 'i20 N-Line', 'i40'],
-
-
+    
+    
                     Toyota: ['Alphard', 'Carmy', 'Carmy 2002-2011', 'Carmy 2012-2014', 'Carmy 2015-2022', 'Commuter', 'Corolla Altis', 'Corolla Altis 2008-2013', 'Estima Emina', 'Etios', 'Etios 2014-2017', 'Etios Cross', 'Etios Liva', 'Fortuner', 'Fortuner 2016-2021', 'Fortuner Legender', 'Glanza', 'Glanza 2019-2011', 'Glanza 2022', 'Hilux', 'Hyryder', 'Innova', 'Innova 2009-2012', 'Innova 2012-2013', 'Innova Crysta', 'Innova Crysta 2016-2020', 'Innova Crysta 2020-2022', 'Innova Hycross', 'Land Cruiser 2009-2020', 'Land Cruiser Prado', 'Land Cruiser Prado 2009-2013', 'Prius', 'Qualis', 'Ruminon', 'Taisor', 'Urban cruiser', 'Vellfire 2020-2023', 'Yaris', 'Prado'],
-
-
-
+    
+    
+    
                     Kia: ['Carens', 'Carnival', 'Carnival 2020-2023', 'EV6', 'Picanto', 'Seltos', 'Seltos 2019-2023', 'Sonet', 'Sonet 2020-2024'],
-
-
-
+    
+    
+    
                     Renault: ['Captur', 'Duster', 'Duster 2012-2015', 'Duster 2015-2016', 'Duster 2016-2019', 'Fluence', 'Fluence 2009-2013', 'K-ZE', 'KWID', 'KWID 2015-2019', 'Kiger', 'Kiger 2021-2023', 'Koleos', 'Lodgy', 'pulse', 'Scalaa', 'Triber'],
-
-
-
+    
+    
+    
                     Ford: ['Aspire 2018', 'EcoSport', 'EcoSport 2013-2015', 'EcoSport 2015-2021', 'Endeavour 2003-2013', 'Endeavour 2015-2020', 'Endeavour 2019', 'Endeavour 2020-2022', 'Escort', 'Falcon', 'Fiesta', 'Fiesta 2004-2010', 'Fiesta Classic', 'Fiesta Classic 2011-2012', 'Figo', 'Figo 2015-2019', 'Figo Aspire', 'Fusion', 'Mustang', 'New Ikon'],
-
-
-
+    
+    
+    
                     Volkswagen: ['Ameo', 'Beetle', 'Caraville', 'CrossPolo', 'Jetta', 'Jetta 2012-2014', 'Passat', 'Polo', 'Polo 2009-2014', 'Polo 2013-2015', 'Polo 2015-2019', 'T-Roc', 'Taigun', 'Tiguan', 'Tiguan 2017-2020', 'Tiguan 2021', 'Tiguan Allspace', 'Touareg', 'Touareg 2010-2011', 'Vento', 'Vento 2010-2014', 'Vento 2015-2019', 'Virtus'],
-
-
-
-
+    
+    
+    
+    
                     // Add all other car companies and their models here
                 },
                 sizes: {
@@ -299,8 +311,8 @@
                                 'Honda WR-V 2017-2020': '195/60R16',
                             
                             
-
-
+    
+    
                                 
                                     'TATA Altroz': '165/80R14',
                                     'TATA Altroz 2020-2023': '165/80R14',
@@ -366,202 +378,202 @@
                                     'TATA Yodha Pickup': '165/80R14',
                                     'TATA Zest': '165/80R14',
                                 
-'Hundai 4S Fluidic Verna': '195/55R16',
-'Hundai Accent': '175/70R14',
-'Hundai Alcazar': '215/60R17',
-'Hundai Aura': '165/70R14',
-'Hundai Aura 2020-2023': '165/70R14',
-'Hundai Creta': '205/65R16',
-'Hundai Creta 2015-2020': '205/65R16',
-'Hundai Creta 2020-2024': '215/60R17',
-'Hundai Creta N Line': '215/60R17',
-'Hundai EON': '145/80R12',
-'Hundai Elantra': '205/60R16',
-'Hundai Elantra 2015-2019': '205/60R16',
-'Hundai Elite i20 2014-2017': '195/55R16',
-'Hundai Elite i20 2017-2020': '195/55R16',
-'Hundai Elite i20 2018': '195/55R16',
-'Hundai Exter': '175/65R14',
-'Hundai Getz': '155/70R13',
-'Hundai Getz Prime': '175/65R14',
-'Hundai Grand i10': '165/65R14',
-'Hundai Grand i10 2013-2016': '165/65R14',
-'Hundai Grand i10 2016-2017': '165/65R14',
-'Hundai Grand i10 Nios': '165/70R14',
-'Hundai Grand i10 Nios 2019-2023': '165/70R14',
-'Hundai Hyundai Casper': '185/65R15',
-'Hundai IONIQ 5': '235/55R19',
-'Hundai Kona': '215/55R17',
-'Hundai Santa Fe': '235/60R18',
-'Hundai Santro': '155/70R13',
-'Hundai Santro 2000 2007': '145/70R13',
-'Hundai Santro Xing': '155/70R13',
-'Hundai Sonata': '215/55R17',
-'Hundai Sonata Embera': '215/60R16',
-'Hundai Sonata Transform': '225/50R17',
-'Hundai Tucson': '225/55R18',
-'Hundai Tucson 2016-2020': '225/55R18',
-'Hundai Tucson 2020-2022': '225/55R18',
-'Hundai Venue': '215/60R16',
-'Hundai Venue 2019-2022': '215/60R16',
-'Hundai Venue 2022': '215/60R16',
-'Hundai Venue N Line': '215/60R16',
-'Hundai Verna': '195/55R16',
-'Hundai Verna 2006-2010': '185/65R14',
-'Hundai Verna 2011-2015': '195/55R16',
-'Hundai Verna 2015-2016': '195/55R16',
-'Hundai Verna 2016-2017': '195/55R16',
-'Hundai Verna 2017-2020': '195/55R16',
-'Hundai Verna 2020-2023': '195/55R16',
-'Hundai Xcent': '165/65R14',
-'Hundai Xcent 2020': '165/65R14',
-'Hundai Xcent Prime': '165/65R14',
-'Hundai i10': '155/70R13',
-'Hundai i20': '185/65R14',
-'Hundai i20 2009-2011': '185/65R14',
-'Hundai i20 2010-2012': '185/65R14',
-'Hundai i20 2020-2023': '195/55R16',
-'Hundai i20 Active': '195/55R16',
-'Hundai i20 N Line 2021-2023': '195/55R16',
-'Hundai i20 N-Line': '195/55R16',
-'Hundai i40': '215/50R17',
-
-
-
-
-'Toyota Alphard': '235/50R18',
-'Toyota Camry': '215/55R17',
-'Toyota Camry 2002-2011': '215/60R16',
-'Toyota Camry 2012-2014': '215/55R17',
-'Toyota Camry 2015-2022': '235/45R18',
-'Toyota Commuter': '195/80R15',
-'Toyota Corolla Altis': '195/65R15',
-'Toyota Corolla Altis 2008-2013': '205/55R16',
-'Toyota Estima Emina': '215/65R15',
-'Toyota Etios': '175/65R14',
-'Toyota Etios 2014-2017': '175/65R14',
-'Toyota Etios Cross': '185/60R15',
-'Toyota Etios Liva': '175/65R14',
-'Toyota Fortuner': '265/60R18',
-'Toyota Fortuner 2016-2021': '265/60R18',
-'Toyota Fortuner Legender': '265/60R18',
-'Toyota Glanza': '185/65R15',
-'Toyota Glanza 2019-2021': '185/65R15',
-'Toyota Glanza 2022': '185/65R15',
-'Toyota Hilux': '265/65R17',
-'Toyota Hyryder': '215/60R17',
-'Toyota Innova': '205/65R15',
-'Toyota Innova 2009-2012': '205/65R15',
-'Toyota Innova 2012-2013': '205/65R15',
-'Toyota Innova Crysta': '205/65R16',
-'Toyota Innova Crysta 2016-2020': '205/65R16',
-'Toyota Innova Crysta 2020-2022': '205/65R16',
-'Toyota Innova Hycross': '215/55R17',
-'Toyota Land Cruiser 2009-2020': '285/60R18',
-'Toyota Land Cruiser Prado': '265/65R17',
-'Toyota Land Cruiser Prado 2009-2013': '265/65R17',
-'Toyota Prius': '195/65R15',
-'Toyota Qualis': '185/80R14',
-'Toyota Rumion': '185/65R15',
-'Toyota Taisor': '205/60R16',
-'Toyota Urban Cruiser': '215/60R17',
-'Toyota Vellfire 2020-2023': '235/50R18',
-'Toyota Yaris': '185/60R15',
-'Toyota Prado': '265/65R17',
-
-
-
-
-
-'Kia Carens': '205/65R16',
-'Kia Carnival': '235/60R18',
-'Kia Carnival 2020-2023': '235/60R18',
-'Kia EV6': '235/55R19',
-'Kia Picanto': '165/60R14',
-'Kia Seltos': '215/60R17',
-'Kia Seltos 2019-2023': '215/60R17',
-'Kia Sonet': '215/60R16',
-'Kia Sonet 2020-2024': '215/60R16',
-
-
-
-
-
-'Renault Captur': '215/60R17',
-'Renault Duster': '215/65R16',
-'Renault Duster 2012-2015': '215/65R16',
-'Renault Duster 2015-2016': '215/65R16',
-'Renault Duster 2016-2019': '215/65R16',
-'Renault Fluence': '205/60R16',
-'Renault Fluence 2009-2013': '205/60R16',
-'Renault K-ZE': '165/70R14',
-'Renault KWID': '155/80R13',
-'Renault KWID 2015-2019': '155/80R13',
-'Renault Kiger': '195/60R16',
-'Renault Kiger 2021-2023': '195/60R16',
-'Renault Koleos': '225/60R17',
-'Renault Lodgy': '185/65R15',
-'Renault Pulse': '165/80R14',
-'Renault Scala': '185/65R15',
-'Renault Triber': '185/65R15',
-
-
-
-
-
-
-'Ford Aspire 2018': '185/60R15',
-'Ford EcoSport': '205/60R16',
-'Ford EcoSport 2013-2015': '205/60R16',
-'Ford EcoSport 2015-2021': '205/60R16',
-'Ford Endeavour 2003-2013': '245/70R16',
-'Ford Endeavour 2015-2020': '265/60R18',
-'Ford Endeavour 2019': '265/60R18',
-'Ford Endeavour 2020-2022': '265/60R18',
-'Ford Escort': '185/65R14',
-'Ford Falcon': '215/60R16',
-'Ford Fiesta': '195/55R15',
-'Ford Fiesta 2004-2010': '195/55R15',
-'Ford Fiesta Classic': '175/65R14',
-'Ford Fiesta Classic 2011-2012': '175/65R14',
-'Ford Figo': '175/65R14',
-'Ford Figo 2015-2019': '175/65R14',
-'Ford Figo Aspire': '185/60R15',
-'Ford Fusion': '195/60R15',
-'Ford Mustang': '255/40R19',
-'Ford New Ikon': '175/65R14',
-
-
-
-
-
-
-
-'Volkswagen Ameo': '175/70R14',
-'Volkswagen Beetle': '205/55R16',
-'Volkswagen Caravelle': '215/65R16',
-'Volkswagen CrossPolo': '185/60R15',
-'Volkswagen Jetta': '205/55R16',
-'Volkswagen Jetta 2012-2014': '205/55R16',
-'Volkswagen Passat': '215/55R17',
-'Volkswagen Polo': '185/60R15',
-'Volkswagen Polo 2009-2014': '185/60R15',
-'Volkswagen Polo 2013-2015': '185/60R15',
-'Volkswagen Polo 2015-2019': '185/60R15',
-'Volkswagen T-Roc': '215/55R17',
-'Volkswagen Taigun': '205/55R17',
-'Volkswagen Tiguan': '215/65R17',
-'Volkswagen Tiguan 2017-2020': '215/65R17',
-'Volkswagen Tiguan 2021': '215/65R17',
-'Volkswagen Tiguan Allspace': '235/50R19',
-'Volkswagen Touareg': '255/55R18',
-'Volkswagen Touareg 2010-2011': '255/55R18',
-'Volkswagen Vento': '185/60R15',
-'Volkswagen Vento 2010-2014': '185/60R15',
-'Volkswagen Vento 2015-2019': '185/60R15',
-'Volkswagen Virtus': '195/55R16',
-
-
+    'Hundai 4S Fluidic Verna': '195/55R16',
+    'Hundai Accent': '175/70R14',
+    'Hundai Alcazar': '215/60R17',
+    'Hundai Aura': '165/70R14',
+    'Hundai Aura 2020-2023': '165/70R14',
+    'Hundai Creta': '205/65R16',
+    'Hundai Creta 2015-2020': '205/65R16',
+    'Hundai Creta 2020-2024': '215/60R17',
+    'Hundai Creta N Line': '215/60R17',
+    'Hundai EON': '145/80R12',
+    'Hundai Elantra': '205/60R16',
+    'Hundai Elantra 2015-2019': '205/60R16',
+    'Hundai Elite i20 2014-2017': '195/55R16',
+    'Hundai Elite i20 2017-2020': '195/55R16',
+    'Hundai Elite i20 2018': '195/55R16',
+    'Hundai Exter': '175/65R14',
+    'Hundai Getz': '155/70R13',
+    'Hundai Getz Prime': '175/65R14',
+    'Hundai Grand i10': '165/65R14',
+    'Hundai Grand i10 2013-2016': '165/65R14',
+    'Hundai Grand i10 2016-2017': '165/65R14',
+    'Hundai Grand i10 Nios': '165/70R14',
+    'Hundai Grand i10 Nios 2019-2023': '165/70R14',
+    'Hundai Hyundai Casper': '185/65R15',
+    'Hundai IONIQ 5': '235/55R19',
+    'Hundai Kona': '215/55R17',
+    'Hundai Santa Fe': '235/60R18',
+    'Hundai Santro': '155/70R13',
+    'Hundai Santro 2000 2007': '145/70R13',
+    'Hundai Santro Xing': '155/70R13',
+    'Hundai Sonata': '215/55R17',
+    'Hundai Sonata Embera': '215/60R16',
+    'Hundai Sonata Transform': '225/50R17',
+    'Hundai Tucson': '225/55R18',
+    'Hundai Tucson 2016-2020': '225/55R18',
+    'Hundai Tucson 2020-2022': '225/55R18',
+    'Hundai Venue': '215/60R16',
+    'Hundai Venue 2019-2022': '215/60R16',
+    'Hundai Venue 2022': '215/60R16',
+    'Hundai Venue N Line': '215/60R16',
+    'Hundai Verna': '195/55R16',
+    'Hundai Verna 2006-2010': '185/65R14',
+    'Hundai Verna 2011-2015': '195/55R16',
+    'Hundai Verna 2015-2016': '195/55R16',
+    'Hundai Verna 2016-2017': '195/55R16',
+    'Hundai Verna 2017-2020': '195/55R16',
+    'Hundai Verna 2020-2023': '195/55R16',
+    'Hundai Xcent': '165/65R14',
+    'Hundai Xcent 2020': '165/65R14',
+    'Hundai Xcent Prime': '165/65R14',
+    'Hundai i10': '155/70R13',
+    'Hundai i20': '185/65R14',
+    'Hundai i20 2009-2011': '185/65R14',
+    'Hundai i20 2010-2012': '185/65R14',
+    'Hundai i20 2020-2023': '195/55R16',
+    'Hundai i20 Active': '195/55R16',
+    'Hundai i20 N Line 2021-2023': '195/55R16',
+    'Hundai i20 N-Line': '195/55R16',
+    'Hundai i40': '215/50R17',
+    
+    
+    
+    
+    'Toyota Alphard': '235/50R18',
+    'Toyota Camry': '215/55R17',
+    'Toyota Camry 2002-2011': '215/60R16',
+    'Toyota Camry 2012-2014': '215/55R17',
+    'Toyota Camry 2015-2022': '235/45R18',
+    'Toyota Commuter': '195/80R15',
+    'Toyota Corolla Altis': '195/65R15',
+    'Toyota Corolla Altis 2008-2013': '205/55R16',
+    'Toyota Estima Emina': '215/65R15',
+    'Toyota Etios': '175/65R14',
+    'Toyota Etios 2014-2017': '175/65R14',
+    'Toyota Etios Cross': '185/60R15',
+    'Toyota Etios Liva': '175/65R14',
+    'Toyota Fortuner': '265/60R18',
+    'Toyota Fortuner 2016-2021': '265/60R18',
+    'Toyota Fortuner Legender': '265/60R18',
+    'Toyota Glanza': '185/65R15',
+    'Toyota Glanza 2019-2021': '185/65R15',
+    'Toyota Glanza 2022': '185/65R15',
+    'Toyota Hilux': '265/65R17',
+    'Toyota Hyryder': '215/60R17',
+    'Toyota Innova': '205/65R15',
+    'Toyota Innova 2009-2012': '205/65R15',
+    'Toyota Innova 2012-2013': '205/65R15',
+    'Toyota Innova Crysta': '205/65R16',
+    'Toyota Innova Crysta 2016-2020': '205/65R16',
+    'Toyota Innova Crysta 2020-2022': '205/65R16',
+    'Toyota Innova Hycross': '215/55R17',
+    'Toyota Land Cruiser 2009-2020': '285/60R18',
+    'Toyota Land Cruiser Prado': '265/65R17',
+    'Toyota Land Cruiser Prado 2009-2013': '265/65R17',
+    'Toyota Prius': '195/65R15',
+    'Toyota Qualis': '185/80R14',
+    'Toyota Rumion': '185/65R15',
+    'Toyota Taisor': '205/60R16',
+    'Toyota Urban Cruiser': '215/60R17',
+    'Toyota Vellfire 2020-2023': '235/50R18',
+    'Toyota Yaris': '185/60R15',
+    'Toyota Prado': '265/65R17',
+    
+    
+    
+    
+    
+    'Kia Carens': '205/65R16',
+    'Kia Carnival': '235/60R18',
+    'Kia Carnival 2020-2023': '235/60R18',
+    'Kia EV6': '235/55R19',
+    'Kia Picanto': '165/60R14',
+    'Kia Seltos': '215/60R17',
+    'Kia Seltos 2019-2023': '215/60R17',
+    'Kia Sonet': '215/60R16',
+    'Kia Sonet 2020-2024': '215/60R16',
+    
+    
+    
+    
+    
+    'Renault Captur': '215/60R17',
+    'Renault Duster': '215/65R16',
+    'Renault Duster 2012-2015': '215/65R16',
+    'Renault Duster 2015-2016': '215/65R16',
+    'Renault Duster 2016-2019': '215/65R16',
+    'Renault Fluence': '205/60R16',
+    'Renault Fluence 2009-2013': '205/60R16',
+    'Renault K-ZE': '165/70R14',
+    'Renault KWID': '155/80R13',
+    'Renault KWID 2015-2019': '155/80R13',
+    'Renault Kiger': '195/60R16',
+    'Renault Kiger 2021-2023': '195/60R16',
+    'Renault Koleos': '225/60R17',
+    'Renault Lodgy': '185/65R15',
+    'Renault Pulse': '165/80R14',
+    'Renault Scala': '185/65R15',
+    'Renault Triber': '185/65R15',
+    
+    
+    
+    
+    
+    
+    'Ford Aspire 2018': '185/60R15',
+    'Ford EcoSport': '205/60R16',
+    'Ford EcoSport 2013-2015': '205/60R16',
+    'Ford EcoSport 2015-2021': '205/60R16',
+    'Ford Endeavour 2003-2013': '245/70R16',
+    'Ford Endeavour 2015-2020': '265/60R18',
+    'Ford Endeavour 2019': '265/60R18',
+    'Ford Endeavour 2020-2022': '265/60R18',
+    'Ford Escort': '185/65R14',
+    'Ford Falcon': '215/60R16',
+    'Ford Fiesta': '195/55R15',
+    'Ford Fiesta 2004-2010': '195/55R15',
+    'Ford Fiesta Classic': '175/65R14',
+    'Ford Fiesta Classic 2011-2012': '175/65R14',
+    'Ford Figo': '175/65R14',
+    'Ford Figo 2015-2019': '175/65R14',
+    'Ford Figo Aspire': '185/60R15',
+    'Ford Fusion': '195/60R15',
+    'Ford Mustang': '255/40R19',
+    'Ford New Ikon': '175/65R14',
+    
+    
+    
+    
+    
+    
+    
+    'Volkswagen Ameo': '175/70R14',
+    'Volkswagen Beetle': '205/55R16',
+    'Volkswagen Caravelle': '215/65R16',
+    'Volkswagen CrossPolo': '185/60R15',
+    'Volkswagen Jetta': '205/55R16',
+    'Volkswagen Jetta 2012-2014': '205/55R16',
+    'Volkswagen Passat': '215/55R17',
+    'Volkswagen Polo': '185/60R15',
+    'Volkswagen Polo 2009-2014': '185/60R15',
+    'Volkswagen Polo 2013-2015': '185/60R15',
+    'Volkswagen Polo 2015-2019': '185/60R15',
+    'Volkswagen T-Roc': '215/55R17',
+    'Volkswagen Taigun': '205/55R17',
+    'Volkswagen Tiguan': '215/65R17',
+    'Volkswagen Tiguan 2017-2020': '215/65R17',
+    'Volkswagen Tiguan 2021': '215/65R17',
+    'Volkswagen Tiguan Allspace': '235/50R19',
+    'Volkswagen Touareg': '255/55R18',
+    'Volkswagen Touareg 2010-2011': '255/55R18',
+    'Volkswagen Vento': '185/60R15',
+    'Volkswagen Vento 2010-2014': '185/60R15',
+    'Volkswagen Vento 2015-2019': '185/60R15',
+    'Volkswagen Virtus': '195/55R16',
+    
+    
                     // Add tire sizes for other models
                 }
             },
@@ -586,8 +598,8 @@
                     
                     
                     Bajaj: ['2019 Dominar 400', '2020 Pulsar 150', '4S Champion', 'Avenger', 'Avenger 400', 'Avenger Cruise', 'Avenger Cruise 220', 'Avenger Street 150', 'Avenger Street 160', 'Blade', 'Boxer', 'Byk', 'CT 100', 'CT 110', 'Caliber', 'Chetak', 'Discover 100', 'Discover 100 M', 'Discover 100T', 'Discover 110', 'Discover 125', 'Discover 125 M', 'Discover 150 F', 'Discover 150 S', 'Dominar 250', 'KB 100 RTZ', 'Kristal', 'M 80', 'Platina', 'Platina 100', 'Platina 110 H Gear', 'Pulsar 125 Neon', 'Pulsar 135 LS', 'Pulsar 150', 'Pulsar 150 NS', 'Pulsar 180', 'Pulsar 180F', 'Pulsar 220F', 'Pulsar 250', 'Pulsar AS 150', 'Pulsar AS 200', 'Pulsar CS 400', 'Pulsar NS 160', 'Pulsar NS 200', 'Pulsar RS 200', 'Pulsar RS 400', 'Saffire', 'Sonic', 'V', 'V15 Power Up', 'XCD', 'Legend'],
-
-
+    
+    
                     RoyalEnfield : ['Bullet 350', 'Bullet 500', 'Bullet Electra', 'Bullet Trials 350', 'Bullet Trials 500', 'Classic 350', 'Classic 500', 'Continental GT ', 'Continental GT 650', 'Electra-X', 'Fury', 'Himalayan', 'Himalayan BS6', 'Interceptor 650', 'Machismo', 'Machismo 500', 'meteor', 'Roadster', 'Thunderbrid 350', 'Thunderbrid 350X', 'Thunderbrid 500', 'Thunderbrid 500X'],
                     // Add all other bike companies and their models here
                 },
@@ -613,12 +625,12 @@
                     'Hero Xtreme 200R': '100/80-17 (Front), 130/70-17 (Rear)',
                     'Hero Xtreme 200S': '100/80-17 (Front), 130/70-17 (Rear)',
                     'Hero Xtreme Sports': '80/100-18 (Front), 110/80-18 (Rear)',
-
+    
                     
-
-
-
-
+    
+    
+    
+    
                     
                         'Bajaj 2019 Dominar 400': '110/70-17 (Front), 150/60-17 (Rear)',
                         'Bajaj 2020 Pulsar 150': '80/100-17 (Front), 100/90-17 (Rear)',
@@ -674,15 +686,15 @@
                         'Bajaj Legend': '3.00-10 (Front & Rear)',
                     
                     
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
                         
                             'RoyalEnfield Bullet 350': '3.00-19 (Front), 3.50-19 (Rear)',
                             'RoyalEnfield Bullet 500': '3.25-19 (Front), 3.50-19 (Rear)',
@@ -708,26 +720,26 @@
                             'RoyalEnfield Thunderbird 500X': '90/90-19 (Front), 120/80-18 (Rear)',
                         
                         
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
                     
                     'Yamaha YZF-R1': '120/70ZR17',
                     // Add tire sizes for other models
                 }
             }
         };
-
+    
         function updateCompanyOptions() {
             const vehicleType = document.getElementById('vehicleType').value;
             const vehicleCompany = document.getElementById('vehicleCompany');
@@ -735,7 +747,7 @@
             
             vehicleCompany.innerHTML = '<option value="">--Select--</option>';
             vehicleModel.innerHTML = '<option value="">--Select--</option>';
-
+    
             if (vehicleType) {
                 const companies = Object.keys(tireData[vehicleType].companies);
                 companies.forEach(company => {
@@ -746,14 +758,14 @@
                 });
             }
         }
-
+    
         function updateModelOptions() {
             const vehicleType = document.getElementById('vehicleType').value;
             const vehicleCompany = document.getElementById('vehicleCompany').value;
             const vehicleModel = document.getElementById('vehicleModel');
             
             vehicleModel.innerHTML = '<option value="">--Select--</option>';
-
+    
             if (vehicleType && vehicleCompany) {
                 const models = tireData[vehicleType].companies[vehicleCompany];
                 models.forEach(model => {
@@ -764,13 +776,13 @@
                 });
             }
         }
-
+    
         function displayTireSize() {
             const vehicleType = document.getElementById('vehicleType').value;
             const vehicleCompany = document.getElementById('vehicleCompany').value;
             const vehicleModel = document.getElementById('vehicleModel').value;
             const tireSizeDisplay = document.getElementById('tireSizeDisplay');
-
+    
             if (vehicleType && vehicleCompany && vehicleModel) {
                 const tireSizeKey = `${vehicleCompany.charAt(0).toUpperCase() + vehicleCompany.slice(1)} ${vehicleModel}`;
                 const tireSize = tireData[vehicleType].sizes[tireSizeKey];
@@ -784,5 +796,9 @@
             }
         }
     </script>
+    <footer>
+        <span>All rights reserved </span>
+        <span>Made with ❤️ by Wasim</span>
+    </footer>
 </body>
 </html>
